@@ -215,7 +215,7 @@ Thanks to the **agricultural research community**, **farmers**, and supporting *
 
 Have questions or ideas?
 
-* **Email:** [611noorsaeed@gmail.com](mailto:anshsinghal548@gmail.com)
+* **Email:** [anshsinghal548@gmail.com](mailto:anshsinghal548@gmail.com)
 * **Issues/Requests:** Open an issue on the GitHub repository
 
 ---
