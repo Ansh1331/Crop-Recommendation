@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crop Recommendation • Smart Farming</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+      :root{
+        --brand:#10b981;       /* emerald */
+        --brand-2:#22c55e;     /* green */
+        --ink:#0f172a;         /* slate-900 */
+        --muted:#64748b;       /* slate-500 */
+        --bg-1:#f8fafc;        /* slate-50 */
+      }
+
+      html,body{height:100%;}
+      body{
+        background: radial-gradient(1200px 800px at 10% 10%, #e6f7f1 0%, #f7fafc 35%, #eef2ff 100%) fixed;
+        font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        color: var(--ink);
+      }
+
+      /* Navbar */
+      .navbar{
+        backdrop-filter: saturate(160%) blur(6px);
+        background: rgba(17,25,40,.85)!important;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+      }
+      .navbar-brand{
+        font-family: 'Poppins', system-ui;
+        letter-spacing:.2px;
+      }
+
+      /* Hero */
+      .hero{
+        text-align:center;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+      .hero-title{
+        font-family:'Poppins', system-ui;
+        font-weight:700;
+        letter-spacing:.4px;
+        line-height:1.1;
+        font-size: clamp(1.6rem, 1.2rem + 2.2vw, 2.6rem);
+        background: linear-gradient(90deg, var(--brand), #60a5fa);
+        -webkit-background-clip:text; background-clip:text; color: transparent;
+      }
+      .hero-sub{color:var(--muted)}
+
+      /* Card (Glass) */
+      .glass-card{
+        background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.75));
+        border: 1px solid rgba(16,185,129,.18);
+        box-shadow: 0 10px 30px rgba(2,6,23,.08);
+        backdrop-filter: blur(8px);
+        border-radius: 16px;
+      }
+
+      /* Form bits */
+      .form-label{font-weight:600}
+      .input-group-text{background:#f1f5f9;border-color:#e5e7eb}
+      .form-control{padding:.7rem .9rem;border-color:#e5e7eb}
+      .form-control:focus{border-color:#86efac; box-shadow:0 0 0 .2rem rgba(16,185,129,.15)}
+
+      .btn-gradient{
+        background: linear-gradient(90deg, var(--brand), var(--brand-2));
+        border:none;
+        padding:.9rem 1.25rem;
+        font-weight:700;
+        border-radius: 12px;
+        box-shadow: 0 8px 18px rgba(16,185,129,.25);
+      }
+      .btn-gradient:hover{filter:brightness(1.02)}
+
+      /* Result card */
+      .result-wrap{display:flex;justify-content:center}
+      .result-card{max-width: 420px; margin-bottom: 2rem;}
+      .result-card .card-title{color:#a7f3d0}
+      .result-card img{margin-bottom: 1rem;}
+
+      /* Footer */
+      footer{color:#64748b}
+
+      /* Utility */
+      .max-w-900{max-width: 900px}
+    </style>
+  </head>
+
+  <body>
+    <!-- ======================= NAVBAR ======================= -->
+	 
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+          <i class="bi bi-seedling text-success"></i>
+          <span>Crop Recommendation</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+            <li class="nav-item"><a class="nav-link disabled">About</a></li>
+          </ul>
+          <form class="d-flex ms-lg-3 mt-3 mt-lg-0" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ======================= MAIN ======================= -->
+    <main class="container max-w-900 py-4 py-md-5">
+      <!-- Hero -->
+      <div class="hero">
+        <h1 class="hero-title">Crop Recommendation System <span aria-hidden="true">🌱</span></h1>
+        <p class="hero-sub mt-2">Enter your soil & weather parameters to get tailored crop suggestions.</p>
+      </div>
+
+      <!-- Form Card -->
+      <div class="glass-card p-4 p-md-5">
+        <form action="/predict" method="POST" class="needs-validation" novalidate>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="Nitrogen" class="form-label">Nitrogen (N)</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-droplet"></i></span>
+                <input type="number" id="Nitrogen" name="Nitrogen" placeholder="e.g., 90" class="form-control" required step="1">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="Phosporus" class="form-label">Phosphorus (P)</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-bezier2"></i></span>
+                <input type="number" id="Phosporus" name="Phosporus" placeholder="e.g., 42" class="form-control" required step="1">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="Potassium" class="form-label">Potassium (K)</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lightning-charge"></i></span>
+                <input type="number" id="Potassium" name="Potassium" placeholder="e.g., 20" class="form-control" required step="1">
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3 mt-1">
+            <div class="col-md-4">
+              <label for="Temperature" class="form-label">Temperature (°C)</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-thermometer-half"></i></span>
+                <input type="number" step="0.01" id="Temperature" name="Temperature" placeholder="e.g., 24.50" class="form-control" required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="Humidity" class="form-label">Humidity (%)</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-moisture"></i></span>
+                <input type="number" step="0.01" id="Humidity" name="Humidity" placeholder="e.g., 67.25" class="form-control" required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="Ph" class="form-label">Soil pH</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-beaker"></i></span>
+                <input type="number" step="0.01" id="Ph" name="Ph" placeholder="e.g., 6.50" class="form-control" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3 mt-1">
+            <div class="col-md-4">
+              <label for="Rainfall" class="form-label">Rainfall (mm)</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-cloud-rain"></i></span>
+                <input type="number" step="0.01" id="Rainfall" name="Rainfall" placeholder="e.g., 150.00" class="form-control" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-gradient btn-lg">
+              <i class="bi bi-magic me-1"></i> Get Recommendation
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Result -->
+      {% if result and result|length > 0 %}
+  <div class="result-wrap mt-100">  <!-- Added mt-5 for more top margin -->
+    <div class="card bg-dark text-white result-card shadow-lg border-0">
+      <img src="{{url_for('static', filename='img.jpg')}}" class="card-img" alt="Recommended crop image">
+      <div class="card-img-overlay d-flex flex-column justify-content-end" style="background:linear-gradient(180deg,rgba(0,0,0,.1) 20%, rgba(0,0,0,.65) 90%)">
+	</div>
+</div>
+</div>
+	<div>
+		<h5 class="card-title mt-10000 mb-2">Recommended crop for cultivation:</h5>
+		<p class="card-text fs-4 fw-bold text-success mb-3">{{ result }}</p>
+	</div>
+{% endif %}
+
+
+      <!-- Footer -->
+      <footer class="text-center mt-5">
+        <small>Built with ❤️ for farmers & agronomists. Make informed decisions, sustainably.</small>
+      </footer>
+    </main>
+
+   <script>
+  // ✅ Clear form + result on refresh (only if user pressed F5/reload)
+  window.onload = () => {
+    if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+      document.querySelector("form").reset();
+      const result = document.getElementById("result-section");
+      if (result) result.remove();
+    }
+  };
+
+  // ✅ Add onclick event to the button
+  const btn = document.querySelector("button[type='submit']");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      // Small timeout to wait for result rendering after POST
+      setTimeout(() => {
+        const resultSection = document.getElementById("result-section");
+        if (resultSection) {
+          window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        }
+      }, 500); // Adjust delay if needed
+    });
+  }
+</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  </body>
+</html>
