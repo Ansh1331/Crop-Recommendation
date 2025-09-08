@@ -215,13 +215,7 @@ Thanks to the **agricultural research community**, **farmers**, and supporting *
 
 Have questions or ideas?
 
-* **Email:** [611noorsaeed@gmail.com](mailto:611noorsaeed@gmail.com)
+* **Email:** [611noorsaeed@gmail.com](mailto:anshsinghal548@gmail.com)
 * **Issues/Requests:** Open an issue on the GitHub repository
 
 ---
-
-### 📝 Notes
-
-* Replace `your-username` with your actual GitHub handle in the clone URL.
-* Add screenshots to `docs/` and reference them in this README for a more visual experience.
-* If you add licensing, include a `LICENSE` file (MIT/Apache‑2.0 are popular choices).
